@@ -29,8 +29,16 @@ var observer = observable2.subscribe(
     (x: any) => { addItem(x); },    // the next handler
     (error: any) => { addItem(`There was an error:: ${error}`); },              // the error handler
     () => { addItem('Completed') }  // the completed handler
-)
+);
+
+var observer2 = observable2.subscribe(
+    (x: any) => { addItem(x); },    // the next handler
+);
+
+// To allow both subscriptions to be unsubscribed, add second subscription to first as a child subscription
+// server.add(observer2);
 
 setTimeout(() => {
     observer.unsubscribe();
+    addItem('Unsubscribed');
 }, 6001);
