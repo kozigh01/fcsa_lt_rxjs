@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { share } from 'rxjs/operators';
 
 function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
