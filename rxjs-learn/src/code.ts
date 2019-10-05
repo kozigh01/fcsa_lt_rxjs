@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 function addItem(val: any) {
     const node = document.createElement('li');
