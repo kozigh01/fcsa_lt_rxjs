@@ -29,11 +29,11 @@ const observable = Observable.create((observer: any) => {
 var observer1 = observable.subscribe(
     (x: any) => { addItem(x); },    // the next handler
     (error: any) => { addItem(`There was an error:: ${error}`); },  // the error handler
-    () => { addItem('Completed', 'output2') }  // the completed handler
+    () => { addItem('Completed') }  // the completed handler
 );
 
 var observer2 = observable.subscribe(
-    (x: any) => { addItem(x); },    // the next handler
+    (x: any) => { addItem(x, 'output2'); },    // the next handler
 );
 
 // To allow both subscriptions to be unsubscribed, add second subscription to first as a child subscription
