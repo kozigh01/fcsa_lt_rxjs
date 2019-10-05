@@ -10,14 +10,10 @@ function addItem(val: any) {
 // Creating an observable
 const observable = Observable.create((observer: any) => {
     try {
-        observer.next('Value 1');
-        // throw new Error('oh no!');
-        observer.next('Value 2');
-
-        let count = 3;
+        let count = 1;
         setInterval(() => {
             observer.next(`Value ${count++}`);
-        }, 2000);
+        }, 1000);
     } catch(err) {
         observer.error(err);
     }
