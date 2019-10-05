@@ -1,10 +1,16 @@
 import { Observable } from 'rxjs';
 
-function addItem(val: any) {
+// function addItem(val: any) {
+//     const node = document.createElement('li');
+//     const textnode = document.createTextNode(val);
+//     node.appendChild(textnode);
+//     document.getElementById("output").appendChild(node);
+// }
+function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
     const textnode = document.createTextNode(val);
     node.appendChild(textnode);
-    document.getElementById("output").appendChild(node);
+    document.getElementById(outputArea).appendChild(node);
 }
 
 // Creating an observable
@@ -23,7 +29,7 @@ const observable = Observable.create((observer: any) => {
 var observer1 = observable.subscribe(
     (x: any) => { addItem(x); },    // the next handler
     (error: any) => { addItem(`There was an error:: ${error}`); },  // the error handler
-    () => { addItem('Completed') }  // the completed handler
+    () => { addItem('Completed', 'output2') }  // the completed handler
 );
 
 var observer2 = observable.subscribe(
