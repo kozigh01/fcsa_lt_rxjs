@@ -7,10 +7,6 @@ function addItem(val: any) {
     document.getElementById("output").appendChild(node);
 }
 
-// const observable1 = Observable.create(function subscribe(observer: any) {
-//     observer.next('Hey there')
-// });
-
 // Creating an observable
 const observable2 = Observable.create((observer: any) => {
     try {
@@ -22,7 +18,6 @@ const observable2 = Observable.create((observer: any) => {
             observer.next('more values');
         }, 2000);
 
-        // observer.complete();
         observer.next('Value 3');  // not sent, because 'next' after the complete has been called on the observer
     } catch(err) {
         observer.error(err);
