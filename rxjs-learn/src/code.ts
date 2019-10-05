@@ -1,4 +1,4 @@
-import { AsyncSubject } from 'rxjs';
+import { Observable, merge } from 'rxjs';
 
 function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
@@ -7,22 +7,16 @@ function addItem(val: any, outputArea: string = "output1") {
     document.getElementById(outputArea).appendChild(node);
 }
 
-// subject is an observer that can also function as an observable (so, can emit values)
-const subject = new AsyncSubject();
+const observable = Observable.create((observer: any) => {
+    observer.next('Hello');
+});
 
-const observer1 = subject.subscribe(
-    data => addItem(`Observer 1: ${data}`),
-    err => addItem(`Observer 1 Error:: ${err}`),
-    () => addItem(`Observer 1 completed`)
-);
+const observable2 = Observable.create((observer: any) => {
+    observer.next('World');
+});
 
-let count = 1;
-const int = setInterval(() => subject.next(count++), 100);
+const newObs = merge(observable, observable2);
 
-setTimeout(() => {
-    const observer2 = subject.subscribe(
-        data => addItem(`Observer 2:: ${data}`, 'output2')
-    );
-    subject.complete();
-}, 800);
-
+newObs.subscribe((data: any) => {
+    addItem(data);
+});
