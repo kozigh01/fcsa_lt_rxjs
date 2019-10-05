@@ -1,5 +1,4 @@
-import { Observable, fromEvent } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 
 function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
