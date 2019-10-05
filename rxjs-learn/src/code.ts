@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
@@ -8,7 +8,7 @@ function addItem(val: any, outputArea: string = "output1") {
 }
 
 // subject is an observer that can also function as an observable (so, can emit values)
-const subject = new Subject();
+const subject = new BehaviorSubject('Initial Value');
 
 subject.subscribe(
     data => addItem(`Observer 1: ${data}`),
@@ -17,6 +17,7 @@ subject.subscribe(
 );
 
 subject.next('Value 1');
+subject.next('...Observer 2 is about to subscribe...');
 
 var observer2 = subject.subscribe(
     data => addItem(`Observer 2:: ${data}`, 'output2'),
