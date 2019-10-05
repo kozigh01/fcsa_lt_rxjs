@@ -22,7 +22,7 @@ const observable = Observable.create((observer: any) => {
 // Subscribing to an observable
 var observer1 = observable.subscribe(
     (x: any) => { addItem(x); },    // the next handler
-    (error: any) => { addItem(`There was an error:: ${error}`); },              // the error handler
+    (error: any) => { addItem(`There was an error:: ${error}`); },  // the error handler
     () => { addItem('Completed') }  // the completed handler
 );
 
