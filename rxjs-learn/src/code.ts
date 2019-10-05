@@ -1,44 +1,54 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { share } from 'rxjs/operators';
 
-function addItem(val: any) {
+function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
     const textnode = document.createTextNode(val);
     node.appendChild(textnode);
-    document.getElementById("output").appendChild(node);
+    document.getElementById(outputArea).appendChild(node);
 }
 
-// Creating an observable
-const observable2 = Observable.create((observer: any) => {
-    try {
-        observer.next('Value 1');
-        // throw new Error('oh no!');
-        observer.next('Value 2');
+let counter_hot = 1;
+let observable_cold: any;
+let observable_hot: any;
+let observer_cold: any;
+let observer_hot: any;
+let hotInterval: any;
+setInterval(() => {
+    document.getElementById('output1').innerHTML = '';
+    document.getElementById('output2').innerHTML = '';
 
+    if(observer_cold) { observer_cold.unsubscribe(); }
+    if(observer_hot) { observer_hot.unsubscribe(); }
+
+    clearInterval(hotInterval);
+
+    // set-up cold observable - data items always produced from inside the observable
+    observable_cold = Observable.create((observer: any) => {
+        let counter_cold = 1;
         setInterval(() => {
-            observer.next('more values');
-        }, 2000);
+            observer.next(`Observer_cold:: ${counter_cold++}`);
+        }, 1000);
+    });
 
-        observer.next('Value 3');  // not sent, because 'next' after the complete has been called on the observer
-    } catch(err) {
-        observer.error(err);
-    }
-});
+    // set-up 'hot' observable - data items are not produced exclusively inside the observable
+    hotInterval = setInterval(() => {
+        counter_hot++;
+    }, 1000);
+    observable_hot = Observable.create((observer: any) => {
+        setInterval(() => {
+            observer.next(`Observer_hot:: ${counter_hot}`);
+        }, 1000);
+    });
 
-// Subscribing to an observable
-var observer = observable2.subscribe(
-    (x: any) => { addItem(x); },    // the next handler
-    (error: any) => { addItem(`There was an error:: ${error}`); },              // the error handler
-    () => { addItem('Completed') }  // the completed handler
-);
+    //  Cold observable - the values of the stream are produced within the observable, so every subscription gets all the values produced
+    observer_cold = observable_cold.subscribe(
+        (x: any) => addItem(`Cold Observable: ${x}`)
+    );
+    observer_hot = observable_hot.subscribe(
+        (x: any) => addItem(`Hot Observable: ${x}`, 'output2')
+    )
 
-var observer2 = observable2.subscribe(
-    (x: any) => { addItem(x); },    // the next handler
-);
+}, 5000);
 
-// To allow both subscriptions to be unsubscribed, add second subscription to first as a child subscription
-// server.add(observer2);
 
-setTimeout(() => {
-    observer.unsubscribe();
-    addItem('Unsubscribed');
-}, 6001);
