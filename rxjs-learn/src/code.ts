@@ -33,4 +33,5 @@ var observer = observable2.subscribe(
 
 setTimeout(() => {
     observer.unsubscribe();
+    addItem('Unsubscribed');
 }, 6001);
