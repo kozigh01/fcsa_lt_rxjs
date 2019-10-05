@@ -37,7 +37,7 @@ var observer2 = observable.subscribe(
 );
 
 // To allow both subscriptions to be unsubscribed, add second subscription to first as a child subscription
-// server.add(observer2);
+// observer1.add(observer2);
 
 setTimeout(() => {
     observer1.unsubscribe();
