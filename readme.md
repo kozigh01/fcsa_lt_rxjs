@@ -1,6 +1,9 @@
 # Learning Time - RxJS
 ## Resources
 * ReactiveX: [main site](http://reactivex.io/) | [RxJS](http://reactivex.io/) | [rxjs.dev](https://rxjs.dev/)
+    * Marble Diagrams: [description](https://rxjs.dev/guide/operators) - find section "Mable diagrams"
+    * Creating operators: [doc](https://rxjs.dev/guide/operators) - find section "Creating custom observables"
+    * Operators: [doc](https://rxjs.dev/guide/operators) - find section "Categories of operators"
 * Cédric Soulas: [reactive how](https://reactive.how/)
 * Animated playground: [Rx Visualizer](https://rxviz.com/)
 * Learn RxJS: [site](https://www.learnrxjs.io/)
