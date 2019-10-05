@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
@@ -8,7 +8,7 @@ function addItem(val: any, outputArea: string = "output1") {
 }
 
 // subject is an observer that can also function as an observable (so, can emit values)
-const subject = new BehaviorSubject('Initial Value');
+const subject = new ReplaySubject(3);
 
 subject.subscribe(
     data => addItem(`Observer 1: ${data}`),
@@ -17,6 +17,8 @@ subject.subscribe(
 );
 
 subject.next('Value 1');
+subject.next('Value 2');
+subject.next('Value 3');
 subject.next('...Observer 2 is about to subscribe...');
 
 var observer2 = subject.subscribe(
@@ -24,11 +26,6 @@ var observer2 = subject.subscribe(
     err => addItem(`Observer 2 Error:: ${err}`, 'output2'),
     () => addItem(`Observer 2 completed`, 'output2')
 )
-
-subject.next('Value 2');
-subject.next('Value 3');
-
-observer2.unsubscribe();
 
 subject.next('Value 4');
 
