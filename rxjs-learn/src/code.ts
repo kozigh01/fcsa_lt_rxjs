@@ -25,14 +25,23 @@ merge(
 
 
 // pluck example
-const { timer } = Rx;
-const { take } = RxOperators;
+// https://observablehq.com/@btheado/rxjs-inserting-a-delay-between-each-item-of-a-stream
+const { from, zip, interval } = Rx;
+const { pluck, map } = RxOperators;
 
-from([
+const source = from([
     { first: 'Bob', last: 'Marley', age: 65 },
     { first: 'Bobbie', last: 'Dillon', age: 70 },
     { first: 'Bobby', last: 'Barker', age: 150 }
-])
-    .pipe(
-        pluck('last')
-    )
+]);
+
+zip(
+  interval(1000),
+  source
+)
+	.pipe(
+  	map(data => data[1])
+  )
+	.pipe(
+  	pluck('last')
+  )
