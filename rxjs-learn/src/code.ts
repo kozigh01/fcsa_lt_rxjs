@@ -1,8 +1,12 @@
-// from creation operator doc: https://rxjs.dev/api/index/function/from
-// pluck doc: https://rxjs.dev/api/operators/pluck
+// interval creation operator doc: https://rxjs.dev/api/index/function/interval
+// timer creation operator doc: https://rxjs.dev/api/index/function/timer
+// skipUntil doc: https://rxjs.dev/api/operators/skipUntil
+// map doc: https://rxjs.dev/api/operators/map
+// take doc: https://rxjs.dev/api/operators/take
 
-import { from } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+
+import { Observable, Subject, interval, timer } from 'rxjs';
+import { skipUntil, map, take } from 'rxjs/operators';
 
 
 function addItem(val: any, outputArea: string = "output1") {
@@ -13,13 +17,27 @@ function addItem(val: any, outputArea: string = "output1") {
 }
 
 
-from([
-    { first: 'Bob', last: 'Marley', age: 65 },
-    { first: 'Bobbie', last: 'Dillon', age: 70 },
-    { first: 'Bobby', last: 'Barker', age: 150 }
-])
-    .pipe(
-        pluck('last')
+const observable1 = Observable.create((data: any) => {
+    let i = 1;
+    setInterval(() => {
+        data.next(i++);
+    }, 1000);
+});
+// alternate definition
+// const observable1 = interval(1000).pipe( map((data: number) => data + 1) );
+
+
+const observable2 = new Subject();
+setTimeout(() => {
+    observable2.next('stop');
+}, 4000);
+// alternate definition
+// const observable2 = timer(4000, 1000).pipe( take(1) );
+
+
+observable1
+    .pipe( 
+        skipUntil(observable2) 
     )
     .subscribe((data: any) => {
         addItem(data);
