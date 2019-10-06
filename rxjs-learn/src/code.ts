@@ -22,3 +22,17 @@ merge(
 .pipe(
 	map(x => x.toUpperCase())
 );
+
+
+// pluck example
+const { timer } = Rx;
+const { take } = RxOperators;
+
+from([
+    { first: 'Bob', last: 'Marley', age: 65 },
+    { first: 'Bobbie', last: 'Dillon', age: 70 },
+    { first: 'Bobby', last: 'Barker', age: 150 }
+])
+    .pipe(
+        pluck('last')
+    )
