@@ -11,3 +11,5 @@
 ## Courses / Videos
 * Design Course: [Learn RxJS in 60 minutes](https://www.youtube.com/watch?v=PhggNGsSQyg)
 * Academind: [SwitchMap](https://www.youtube.com/watch?v=6lKoLwGlglE) | [MergeMap](https://www.youtube.com/watch?v=b59tcUwfpWU) | [RxJS 6](https://www.youtube.com/watch?v=X9fdpGthrXA) | [youtube](https://www.youtube.com/results?search_query=academind+rxjs)
+## Misc
+* Insert delay between elements of a stream: [link](https://observablehq.com/@btheado/rxjs-inserting-a-delay-between-each-item-of-a-stream)
