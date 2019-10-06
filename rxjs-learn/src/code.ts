@@ -1,3 +1,5 @@
+// reference doc: https://rxjs.dev/api/index/function/merge
+
 import { Observable, merge } from 'rxjs';
 
 function addItem(val: any, outputArea: string = "output1") {
@@ -7,7 +9,7 @@ function addItem(val: any, outputArea: string = "output1") {
     document.getElementById(outputArea).appendChild(node);
 }
 
-const observable = Observable.create((observer: any) => {
+const observable1 = Observable.create((observer: any) => {
     observer.next('Hello');
 });
 
@@ -15,7 +17,7 @@ const observable2 = Observable.create((observer: any) => {
     observer.next('World');
 });
 
-const newObs = merge(observable, observable2);
+const newObs = merge(observable1, observable2);
 
 newObs.subscribe((data: any) => {
     addItem(data);
