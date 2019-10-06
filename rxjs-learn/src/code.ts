@@ -1,6 +1,6 @@
 // reference doc: https://rxjs.dev/api/index/function/merge
 
-import { Observable, merge } from 'rxjs';
+import { Observable, merge, of } from 'rxjs';
 
 function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
@@ -37,3 +37,13 @@ merge(
 ).subscribe((data: any) => {
     addItem(data, 'output2');
 });
+
+// // another alternate way to do the same thing
+// // of doc: https://rxjs.dev/api/index/function/of
+// merge(
+//     of('Hello'),
+//     of('World'),
+//     of('!!')
+// ).subscribe((data: any) => {
+//     addItem(data, 'output2');
+// });
