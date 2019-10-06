@@ -1,4 +1,8 @@
-import { Observable, merge } from 'rxjs';
+// map doc: https://rxjs.dev/api/operators/map
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 function addItem(val: any, outputArea: string = "output1") {
     const node = document.createElement('li');
@@ -7,16 +11,12 @@ function addItem(val: any, outputArea: string = "output1") {
     document.getElementById(outputArea).appendChild(node);
 }
 
-const observable = Observable.create((observer: any) => {
-    observer.next('Hello');
-});
-
-const observable2 = Observable.create((observer: any) => {
-    observer.next('World');
-});
-
-const newObs = merge(observable, observable2);
-
-newObs.subscribe((data: any) => {
-    addItem(data);
-});
+Observable.create((observer: any) => {
+    observer.next('Hello World!!');
+})
+    .pipe(
+        map((x: string) => { return x.toUpperCase(); })
+    )
+    .subscribe((data: string) => {
+        addItem(data);
+    });
