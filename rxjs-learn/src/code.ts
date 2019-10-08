@@ -6,7 +6,7 @@
 
 
 import { Observable, Subject, interval, timer } from 'rxjs';
-import { skipUntil, map, take } from 'rxjs/operators';
+import { skipUntil, map, take, takeUntil } from 'rxjs/operators';
 
 
 function addItem(val: any, outputArea: string = "output1") {
@@ -37,8 +37,18 @@ setTimeout(() => {
 
 observable1
     .pipe( 
-        skipUntil(observable2) 
+        skipUntil(observable2),
+        take(5)
     )
     .subscribe((data: any) => {
         addItem(data);
+    });
+
+
+    observable1
+    .pipe( 
+        takeUntil(observable2)
+    )
+    .subscribe((data: any) => {
+        addItem(data, 'output2');
     });
