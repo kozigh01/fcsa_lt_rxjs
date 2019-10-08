@@ -1,12 +1,5 @@
-// interval creation operator doc: https://rxjs.dev/api/index/function/interval
-// timer creation operator doc: https://rxjs.dev/api/index/function/timer
-// skipUntil doc: https://rxjs.dev/api/operators/skipUntil
-// map doc: https://rxjs.dev/api/operators/map
-// take doc: https://rxjs.dev/api/operators/take
-
-
-import { Observable, Subject, interval, timer } from 'rxjs';
-import { skipUntil, map, take } from 'rxjs/operators';
+import { Observable, Subject, interval, timer, pipe, from } from 'rxjs';
+import { skipUntil, map, take, filter } from 'rxjs/operators';
 
 
 function addItem(val: any, outputArea: string = "output1") {
@@ -16,29 +9,17 @@ function addItem(val: any, outputArea: string = "output1") {
     document.getElementById(outputArea).appendChild(node);
 }
 
+function discardOddDoubleEven() {
+  return pipe(
+    filter((v: number) => !(v % 2)),
+    map((v: number) => v + v),
+  );
+}
 
-const observable1 = Observable.create((data: any) => {
-    let i = 1;
-    setInterval(() => {
-        data.next(i++);
-    }, 1000);
-});
-// alternate definition
-// const observable1 = interval(1000).pipe( map((data: number) => data + 1) );
-
-
-const observable2 = new Subject();
-setTimeout(() => {
-    observable2.next('stop');
-}, 4000);
-// alternate definition
-// const observable2 = timer(4000, 1000).pipe( take(1) );
-
-
-observable1
-    .pipe( 
-        skipUntil(observable2) 
+from([1,2,3,4,5,6,7,8,9,10])
+    .pipe(
+        discardOddDoubleEven()
     )
-    .subscribe((data: any) => {
+    .subscribe((data: number) => {
         addItem(data);
     });
